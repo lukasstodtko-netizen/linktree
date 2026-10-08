@@ -12,11 +12,11 @@ window.SITE = {
   logo: "",
 
   // E-Mail-Adresse für Collab-Anfragen
-  email: "collab@thecyclingmadness.de",
+  email: "thecyclingmdnss@gmail.com",
 
   // Social / Club Links
-  instagram: "https://www.instagram.com/thecyclingmadness",
-  strava: "https://www.strava.com/clubs/thecyclingmadness",
+  instagram: "https://www.instagram.com/thecyclingmadness/",
+  strava: "https://www.strava.com/clubs/mdnss",
 
   // Weitere Links (optional). Beispiel:
   // { title: "Unser Shop", url: "https://...", icon: "shop" }
@@ -42,11 +42,14 @@ window.SITE = {
 
   /*
    * Sponsoren
-   * logo: Bild in assets/sponsors/ ablegen (leer = Name wird als Text angezeigt)
+   * logo: Bild in assets/sponsors/ ablegen, z. B. "assets/sponsors/julbo.png"
+   *       (leer = Name wird als Text angezeigt)
+   * url:  Website des Sponsors (leer = Kachel ist nicht klickbar)
    */
   sponsors: [
-    { name: "Sponsor 1", url: "https://example.com", logo: "" },
-    { name: "Sponsor 2", url: "https://example.com", logo: "" },
-    { name: "Sponsor 3", url: "https://example.com", logo: "" }
+    { name: "Congelats", url: "", logo: "" },
+    { name: "Julbo", url: "https://www.julbo.com", logo: "" },
+    { name: "Jordan", url: "", logo: "" },
+    { name: "Mode", url: "", logo: "" }
   ]
 };

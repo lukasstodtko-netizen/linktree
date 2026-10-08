@@ -115,10 +115,12 @@
     if (!el) return;
     const list = S.sponsors || [];
     if (!list.length) { el.closest(".section").remove(); return; }
-    el.innerHTML = list.map((s) => `
-      <a class="sponsor" href="${esc(s.url || "#")}" target="_blank" rel="noopener" title="${esc(s.name)}">
-        ${s.logo ? `<img src="${esc(s.logo)}" alt="${esc(s.name)}" loading="lazy">` : esc(s.name)}
-      </a>`).join("");
+    el.innerHTML = list.map((s) => {
+      const inner = s.logo ? `<img src="${esc(s.logo)}" alt="${esc(s.name)}" loading="lazy">` : esc(s.name);
+      return s.url
+        ? `<a class="sponsor" href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.name)}">${inner}</a>`
+        : `<div class="sponsor" title="${esc(s.name)}">${inner}</div>`;
+    }).join("");
   }
 
   // ---------- Veranstaltungsseite ----------
