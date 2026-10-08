@@ -94,6 +94,8 @@
         href: "events.html", icon: "calendar", title: "Próximas experiencias",
         sub: `Lo siguiente: ${upcoming[0].title}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
       });
+    } else if (S.stravaEvents) {
+      html += button({ href: S.stravaEvents, icon: "calendar", title: "Próximas experiencias", sub: "Salidas y eventos del club en Strava", accent: "accent-blue" });
     }
     (S.links || []).forEach((l) => { html += button({ href: l.url, icon: l.icon, title: l.title, sub: l.sub, accent: "accent-salmon" }); });
     if (S.instagram) html += button({ href: S.instagram, icon: "instagram", title: "Instagram", sub: "Fotos, retos y backstage", accent: "accent-white" });
@@ -161,7 +163,7 @@
       ? upcoming.map((e) => eventCard(e, false)).join("")
       : `<div class="empty">Ahora mismo estamos preparando la próxima locura.<br>
            Síguenos en <a href="${esc(S.instagram)}" target="_blank" rel="noopener">Instagram</a>
-           o únete al <a href="${esc(S.strava)}" target="_blank" rel="noopener">club de Strava</a> para no perderte nada.</div>`;
+           o mira los <a href="${esc(S.stravaEvents || S.strava)}" target="_blank" rel="noopener">eventos del club en Strava</a>.</div>`;
 
     const pastEl = $("#events-past");
     if (past.length) pastEl.innerHTML = past.map((e) => eventCard(e, true)).join("");

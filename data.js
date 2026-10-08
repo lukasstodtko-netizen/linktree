@@ -21,6 +21,8 @@ window.SITE = {
   // Social / Club Links
   instagram: "https://www.instagram.com/thecyclingmadness/",
   strava: "https://www.strava.com/clubs/mdnss",
+  // Veranstaltungen des Strava Clubs (Club-ID 1192662)
+  stravaEvents: "https://www.strava.com/clubs/1192662/group_events",
 
   // Weitere Links (optional). Beispiel:
   // { title: "Tienda", sub: "Maillots y más", url: "https://...", icon: "shop" }
@@ -33,20 +35,15 @@ window.SITE = {
    * type:    "salida" | "evento" | "reto" | "carrera"
    *          (die vier Formen aus dem Brand Book, jede mit eigener Akzentfarbe)
    * edition: optional, römische Zahl, z. B. "IV"
-   * Gibt es keine kommenden Termine, wird der Button auf der Startseite ausgeblendet.
+   * Leer lassen = der Button „Próximas experiencias“ führt direkt zu den
+   * Veranstaltungen im Strava Club (stravaEvents). Termine hier nur eintragen,
+   * wenn sie zusätzlich auf einer eigenen Seite erscheinen sollen.
    */
   events: [
-    {
-      type: "salida",
-      title: "Café & ruta",
-      edition: "",
-      date: "2026-11-14",
-      time: "09:00",
-      location: "[Punto de salida]",
-      distance: "[80] km · ritmo social",
-      description: "Salida en grupeta, a tu ritmo, y café al final. Trae a quien quieras.",
-      link: "" // optional: inscripción, evento de Strava, ruta de Komoot …
-    }
+    // Beispiel:
+    // { type: "salida", title: "Café & ruta", edition: "", date: "2026-11-14", time: "09:00",
+    //   location: "Punto de salida", distance: "80 km · ritmo social",
+    //   description: "Salida en grupeta …", link: "https://www.strava.com/clubs/1192662/group_events/…" }
   ],
 
   /*
