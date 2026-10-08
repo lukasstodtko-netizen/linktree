@@ -10,8 +10,6 @@
 window.SITE = {
   name: "The Cycling Madness",
   short: "mdnss",
-  claim: "Creamos experiencias para el ciclista",
-  closing: "Porque al final, Madness son las personas.",
 
   // Logo und Foto aus dem Brand Book (Logo nicht verändern oder nachbauen)
   logo: "assets/logo-white.png",

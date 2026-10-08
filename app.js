@@ -39,9 +39,7 @@
     if (!el) return;
     if (S.hero) el.style.backgroundImage = `url("${S.hero}")`;
     const title = el.dataset.title;
-    const headline = title
-      ? `<h1>${esc(title)}</h1>`
-      : `<h1>${esc(S.claim).replace(/ para /i, " <span>para ")}</span></h1>`;
+    const headline = title ? `<h1>${esc(title)}</h1>` : "";
     el.insertAdjacentHTML("beforeend", `
       <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
       ${headline}`);
@@ -51,7 +49,6 @@
     const el = $("#footer");
     if (!el) return;
     el.innerHTML = `
-      <p class="closing">${esc(S.closing)}</p>
       © ${new Date().getFullYear()} ${esc(S.name)} · <a href="mailto:${esc(S.email)}">${esc(S.email)}</a>`;
   }
 
