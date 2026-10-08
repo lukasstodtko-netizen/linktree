@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veranstaltungen – {name}</title>
+  <meta name="description" content="Kommende Ausfahrten und Events von The Cycling Madness.">
+  <meta name="theme-color" content="#0d0d0f">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚴</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="index.html">← Zurück</a>
+    <header class="profile" id="profile"></header>
+
+    <section aria-labelledby="up-title">
+      <h2 class="section-title" id="up-title">Kommende Veranstaltungen</h2>
+      <div id="events-upcoming"></div>
+    </section>
+
+    <section class="section" aria-labelledby="past-title">
+      <h2 class="section-title" id="past-title">Vergangene Veranstaltungen</h2>
+      <div id="events-past"></div>
+    </section>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
