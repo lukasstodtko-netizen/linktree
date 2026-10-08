@@ -56,9 +56,9 @@ window.SITE = {
    * url:  Website des Sponsors (leer = Kachel ist nicht klickbar)
    */
   sponsors: [
-    { name: "Congelats", url: "", logo: "" },
+    { name: "Congelats del Nord", url: "https://congelatsdelnord.com", logo: "" },
     { name: "Julbo", url: "https://www.julbo.com", logo: "" },
-    { name: "Jordan", url: "", logo: "" },
-    { name: "Mode", url: "", logo: "" }
+    { name: "Jordan Workshop", url: "https://www.instagram.com/jordan.workshop/", logo: "" },
+    { name: "MØDE Coffee", url: "https://www.instagram.com/the.mode.coffee/", logo: "" }
   ]
 };
