@@ -1,6 +1,8 @@
-# The Cycling Madness – Linktree
+# mdnss · The Cycling Madness – Linktree
 
 Eigene Link-in-Bio-Seite für den Instagram-Account von **The Cycling Madness**.
+Gestaltet nach dem **mdnss Brand Book** (Navy / Light Blue / Salmon, Unbounded + Jost,
+Original-Logo, Seitentexte auf Spanisch, nie „TCM“).
 
 - **Collab anfragen** – kleines Formular, das eine fertig ausgefüllte E-Mail öffnet
 - **Strava Club** – direkter Link zum Club
@@ -15,8 +17,8 @@ Alles steht in **`data.js`**:
 |------|-----------|
 | `email` | Adresse für Collab-Anfragen |
 | `strava` / `instagram` | Links zu Strava-Club und Instagram |
-| `logo` | z. B. `assets/logo.png` (leer = Initialen „TCM“) |
-| `events` | Termine mit `date: "JJJJ-MM-TT"` – vergangene wandern automatisch ins Archiv |
+| `logo` / `hero` | Original-Logo und Titelfoto aus dem Brand Book |
+| `events` | Termine mit `date: "JJJJ-MM-TT"` und `type` (`salida`, `evento`, `reto`, `carrera`) – vergangene wandern automatisch ins Archiv |
 | `sponsors` | Name, Link und optional Logo (Bild in `assets/sponsors/` ablegen) |
 | `links` | beliebige weitere Buttons |
 

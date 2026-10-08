@@ -1,29 +1,30 @@
 <!doctype html>
-<html lang="de">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Veranstaltungen – {name}</title>
-  <meta name="description" content="Kommende Ausfahrten und Events von The Cycling Madness.">
-  <meta name="theme-color" content="#0d0d0f">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚴</text></svg>">
+  <title>Experiencias · mdnss</title>
+  <meta name="description" content="Próximas salidas, eventos, retos y carreras de mdnss · The Cycling Madness.">
+  <meta name="theme-color" content="#162840">
+  <link rel="icon" href="assets/logo-navy.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Jost:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="wrap">
-    <a class="back" href="index.html">← Zurück</a>
-    <header class="profile" id="profile"></header>
+    <header class="hero compact" id="hero" data-title="Próximas experiencias">
+      <a class="back" href="index.html">← Volver</a>
+    </header>
+    <div class="stripe" aria-hidden="true"><span></span><span></span><span></span></div>
 
-    <section aria-labelledby="up-title">
-      <h2 class="section-title" id="up-title">Kommende Veranstaltungen</h2>
+    <section aria-label="Próximas experiencias">
       <div id="events-upcoming"></div>
     </section>
 
     <section class="section" aria-labelledby="past-title">
-      <h2 class="section-title" id="past-title">Vergangene Veranstaltungen</h2>
+      <h2 class="section-title" id="past-title">Ya rodadas</h2>
       <div id="events-past"></div>
     </section>
 

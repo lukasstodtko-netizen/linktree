@@ -1,15 +1,21 @@
 /*
  * ============================================================
- *  THE CYCLING MADNESS – Inhalte der Linktree-Seite
+ *  mdnss · The Cycling Madness – Inhalte der Linktree-Seite
  *  Nur diese Datei muss bearbeitet werden, um Links,
  *  Veranstaltungen und Sponsoren zu ändern.
+ *  Sprache laut Brand Book: Spanisch, cercano y con energía.
+ *  Nie „TCM“ als Abkürzung verwenden – kurz heißt es „mdnss“.
  * ============================================================
  */
 window.SITE = {
   name: "The Cycling Madness",
-  tagline: "Bikes. Kilometer. Wahnsinn.",
-  // Pfad zu eurem Logo (z. B. "assets/logo.png"). Leer lassen = Initialen "TCM".
-  logo: "",
+  short: "mdnss",
+  claim: "Creamos experiencias para el ciclista",
+  closing: "Porque al final, Madness son las personas.",
+
+  // Logo und Foto aus dem Brand Book (Logo nicht verändern oder nachbauen)
+  logo: "assets/logo-white.png",
+  hero: "assets/hero.jpg",
 
   // E-Mail-Adresse für Collab-Anfragen
   email: "thecyclingmdnss@gmail.com",
@@ -19,24 +25,29 @@ window.SITE = {
   strava: "https://www.strava.com/clubs/mdnss",
 
   // Weitere Links (optional). Beispiel:
-  // { title: "Unser Shop", url: "https://...", icon: "shop" }
+  // { title: "Tienda", sub: "Maillots y más", url: "https://...", icon: "shop" }
   // Verfügbare Icons: link, shop, youtube, route, heart
   links: [],
 
   /*
    * Veranstaltungen
-   * date: "JJJJ-MM-TT" – vergangene Termine wandern automatisch ins Archiv.
+   * date:    "JJJJ-MM-TT" – vergangene Termine wandern automatisch ins Archiv.
+   * type:    "salida" | "evento" | "reto" | "carrera"
+   *          (die vier Formen aus dem Brand Book, jede mit eigener Akzentfarbe)
+   * edition: optional, römische Zahl, z. B. "IV"
    * Gibt es keine kommenden Termine, wird der Button auf der Startseite ausgeblendet.
    */
   events: [
     {
-      title: "Season Opener Ride",
+      type: "salida",
+      title: "Café & ruta",
+      edition: "",
       date: "2026-11-14",
-      time: "09:00 Uhr",
-      location: "Treffpunkt: Marktplatz",
-      distance: "80 km · 600 hm",
-      description: "Gemeinsame Ausfahrt im Gruppentempo, anschließend Kaffee & Kuchen.",
-      link: "" // optional: Anmeldung, Strava-Event, Komoot-Route …
+      time: "09:00",
+      location: "[Punto de salida]",
+      distance: "[80] km · ritmo social",
+      description: "Salida en grupeta, a tu ritmo, y café al final. Trae a quien quieras.",
+      link: "" // optional: inscripción, evento de Strava, ruta de Komoot …
     }
   ],
 

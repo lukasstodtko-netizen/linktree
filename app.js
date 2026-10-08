@@ -11,7 +11,15 @@
     youtube: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.75 15.02 5.75-3.02-5.75-3.02z"/></svg>',
     route: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>',
     heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
-    arrow: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
+  };
+
+  // Die vier Formen, mdnss zu leben – jede mit ihrem Akzent aus der Palette
+  const TYPES = {
+    salida: { label: "Salida", accent: "accent-white" },
+    evento: { label: "Evento", accent: "accent-blue" },
+    reto: { label: "Reto", accent: "accent-salmon" },
+    carrera: { label: "Carrera", accent: "accent-orange" }
   };
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -25,28 +33,31 @@
   const upcoming = events.filter((e) => parseDate(e.date) >= today);
   const past = events.filter((e) => parseDate(e.date) < today).reverse();
 
-  // ---------- Shared header / footer ----------
-  function renderProfile() {
-    const el = $("#profile");
+  // ---------- Kopf / Fuß ----------
+  function renderHero() {
+    const el = $("#hero");
     if (!el) return;
-    const initials = S.name.split(/\s+/).map((w) => w[0]).join("").toUpperCase().slice(0, 3);
-    el.innerHTML = `
-      <div class="avatar"><div class="avatar-inner">
-        ${S.logo ? `<img src="${esc(S.logo)}" alt="${esc(S.name)} Logo">` : `<span>${esc(initials)}</span>`}
-      </div></div>
-      <h1>${esc(S.name)}</h1>
-      <p class="tagline">${esc(S.tagline)}</p>`;
+    if (S.hero) el.style.backgroundImage = `url("${S.hero}")`;
+    const title = el.dataset.title;
+    const headline = title
+      ? `<h1>${esc(title)}</h1>`
+      : `<h1>${esc(S.claim).replace(/ para /i, " <span>para ")}</span></h1>`;
+    el.insertAdjacentHTML("beforeend", `
+      <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
+      ${headline}`);
   }
 
   function renderFooter() {
     const el = $("#footer");
     if (!el) return;
-    el.innerHTML = `© ${new Date().getFullYear()} ${esc(S.name)} · <a href="mailto:${esc(S.email)}">${esc(S.email)}</a>`;
+    el.innerHTML = `
+      <p class="closing">${esc(S.closing)}</p>
+      © ${new Date().getFullYear()} ${esc(S.name)} · <a href="mailto:${esc(S.email)}">${esc(S.email)}</a>`;
   }
 
   // ---------- Startseite ----------
-  function button({ href, icon, title, sub, cls = "", badge = "", external = true }) {
-    return `<a class="btn ${cls}" href="${esc(href)}" ${external ? 'target="_blank" rel="noopener"' : ""}>
+  function button({ href, icon, title, sub, accent = "accent-white", badge = "", external = true }) {
+    return `<a class="btn ${accent}" href="${esc(href)}" ${external ? 'target="_blank" rel="noopener"' : ""}>
       <span class="icon-wrap">${ICONS[icon] || ICONS.link}</span>
       <span class="label">${esc(title)}${sub ? `<span class="sub">${esc(sub)}</span>` : ""}</span>
       ${badge ? `<span class="badge">${esc(badge)}</span>` : ""}
@@ -60,35 +71,35 @@
     let html = `
       <button class="btn btn-primary" id="collab-toggle" aria-expanded="false" aria-controls="collab">
         <span class="icon-wrap">${ICONS.mail}</span>
-        <span class="label">Collab anfragen<span class="sub">Schreib uns direkt per Mail</span></span>
+        <span class="label">Colabora con nosotros<span class="sub">Escríbenos directamente por mail</span></span>
         <span class="arrow">${ICONS.arrow}</span>
       </button>
       <form class="collab" id="collab" novalidate>
-        <label for="c-name">Name / Marke</label>
-        <input id="c-name" name="name" required placeholder="z. B. Max Mustermann / Brand XY">
-        <label for="c-type">Art der Zusammenarbeit</label>
+        <label for="c-name">Nombre / Marca</label>
+        <input id="c-name" name="name" required placeholder="Tu nombre o tu marca">
+        <label for="c-type">¿Qué tienes en mente?</label>
         <select id="c-type" name="type">
-          <option>Sponsoring</option>
-          <option>Produkttest / Review</option>
-          <option>Gemeinsame Ausfahrt / Event</option>
-          <option>Content-Kooperation</option>
-          <option>Sonstiges</option>
+          <option>Patrocinio</option>
+          <option>Probar producto</option>
+          <option>Salida o evento juntos</option>
+          <option>Contenido</option>
+          <option>Otra locura</option>
         </select>
-        <label for="c-msg">Nachricht</label>
-        <textarea id="c-msg" name="message" placeholder="Erzähl uns kurz von deiner Idee …"></textarea>
-        <button type="submit" class="btn btn-primary">E-Mail öffnen</button>
-        <p class="hint">Öffnet dein Mail-Programm. Alternativ direkt an <a href="mailto:${esc(S.email)}">${esc(S.email)}</a></p>
+        <label for="c-msg">Mensaje</label>
+        <textarea id="c-msg" name="message" placeholder="Cuéntanos tu idea…"></textarea>
+        <button type="submit" class="send">Abrir mail</button>
+        <p class="hint">Se abre tu app de correo. O escríbenos a <a href="mailto:${esc(S.email)}">${esc(S.email)}</a></p>
       </form>`;
 
-    if (S.strava) html += button({ href: S.strava, icon: "strava", title: "Strava Club", sub: "Fahr mit uns – tritt dem Club bei", cls: "btn-strava" });
+    if (S.strava) html += button({ href: S.strava, icon: "strava", title: "Club de Strava", sub: "Únete y rueda con la grupeta", accent: "accent-orange" });
     if (upcoming.length) {
       html += button({
-        href: "events.html", icon: "calendar", title: "Veranstaltungen",
-        sub: `Nächster Termin: ${upcoming[0].title}`, badge: `${upcoming.length}`, external: false
+        href: "events.html", icon: "calendar", title: "Próximas experiencias",
+        sub: `Lo siguiente: ${upcoming[0].title}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
       });
     }
-    (S.links || []).forEach((l) => { html += button({ href: l.url, icon: l.icon, title: l.title, sub: l.sub }); });
-    if (S.instagram) html += button({ href: S.instagram, icon: "instagram", title: "Instagram", sub: "Folge uns" });
+    (S.links || []).forEach((l) => { html += button({ href: l.url, icon: l.icon, title: l.title, sub: l.sub, accent: "accent-salmon" }); });
+    if (S.instagram) html += button({ href: S.instagram, icon: "instagram", title: "Instagram", sub: "Fotos, retos y backstage", accent: "accent-white" });
 
     el.innerHTML = html;
 
@@ -104,8 +115,8 @@
       const name = form.elements.name.value.trim();
       const type = form.elements.type.value;
       const msg = form.elements.message.value.trim();
-      const subject = `Collab-Anfrage: ${type}${name ? " – " + name : ""}`;
-      const body = `Hallo ${S.name},\n\n${msg || "wir hätten Interesse an einer Zusammenarbeit."}\n\nArt: ${type}\n\nViele Grüße\n${name}`;
+      const subject = `Colaboración mdnss: ${type}${name ? " – " + name : ""}`;
+      const body = `¡Hola, equipo mdnss!\n\n${msg || "Nos encantaría colaborar con vosotros."}\n\nTipo: ${type}\n\nUn saludo,\n${name}`;
       window.location.href = `mailto:${S.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
   }
@@ -124,21 +135,24 @@
   }
 
   // ---------- Veranstaltungsseite ----------
-  const MONTHS = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+  const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
   function eventCard(e, isPast) {
     const d = parseDate(e.date);
-    const meta = [e.time && `🕘 ${esc(e.time)}`, e.location && `📍 ${esc(e.location)}`, e.distance && `🚴 ${esc(e.distance)}`].filter(Boolean);
-    return `<article class="event${isPast ? " past" : ""}">
+    const t = TYPES[e.type] || TYPES.evento;
+    const meta = [e.time && `${esc(e.time)} h`, e.location, e.distance].filter(Boolean).map(esc);
+    return `<article class="event ${t.accent}${isPast ? " past" : ""}">
       <div class="event-date">
         <span class="day">${d.getDate()}</span>
         <span class="month">${MONTHS[d.getMonth()]}</span>
         <span class="year">${d.getFullYear()}</span>
       </div>
       <div>
-        <h3>${esc(e.title)}</h3>
+        <p class="type">${t.label}</p>
+        <h3>${esc(e.title)}${e.edition ? ` <span class="edition">${esc(e.edition)}</span>` : ""}</h3>
         ${meta.length ? `<p class="meta">${meta.map((m) => `<span>${m}</span>`).join("")}</p>` : ""}
         ${e.description ? `<p>${esc(e.description)}</p>` : ""}
-        ${e.link && !isPast ? `<a class="event-link" href="${esc(e.link)}" target="_blank" rel="noopener">Mehr Infos & Anmeldung →</a>` : ""}
+        ${e.link && !isPast ? `<a class="event-link" href="${esc(e.link)}" target="_blank" rel="noopener">Info e inscripción →</a>` : ""}
+        <p class="sign">Una experiencia mdnss</p>
       </div>
     </article>`;
   }
@@ -148,9 +162,9 @@
     if (!up) return;
     up.innerHTML = upcoming.length
       ? upcoming.map((e) => eventCard(e, false)).join("")
-      : `<div class="empty">Aktuell sind keine Veranstaltungen geplant.<br>
-           Folge uns auf <a href="${esc(S.instagram)}" target="_blank" rel="noopener">Instagram</a>
-           oder im <a href="${esc(S.strava)}" target="_blank" rel="noopener">Strava Club</a>, um nichts zu verpassen.</div>`;
+      : `<div class="empty">Ahora mismo estamos preparando la próxima locura.<br>
+           Síguenos en <a href="${esc(S.instagram)}" target="_blank" rel="noopener">Instagram</a>
+           o únete al <a href="${esc(S.strava)}" target="_blank" rel="noopener">club de Strava</a> para no perderte nada.</div>`;
 
     const pastEl = $("#events-past");
     if (past.length) pastEl.innerHTML = past.map((e) => eventCard(e, true)).join("");
@@ -158,7 +172,7 @@
   }
 
   document.title = document.title.replace("{name}", S.name);
-  renderProfile();
+  renderHero();
   renderLinks();
   renderSponsors();
   renderEvents();
