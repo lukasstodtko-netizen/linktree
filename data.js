@@ -12,7 +12,7 @@ window.SITE = {
   short: "mdnss",
 
   // Logo und Foto aus dem Brand Book (Logo nicht verändern oder nachbauen)
-  logo: "assets/logo-white.png",
+  logo: "assets/logo-navy.png",
   hero: "assets/hero.webp",
 
   // E-Mail-Adresse für Collab-Anfragen
@@ -58,7 +58,7 @@ window.SITE = {
    * main: true  = Hauptsponsor, wird größer und zuerst angezeigt
    * role:       was der Partner beisteuert (Spanisch, kurz)
    * logo:       Bild in assets/sponsors/ ablegen, z. B. "assets/sponsors/julbo.svg"
-   *             (einfarbig weiß oder navy; leer = Name wird als Text angezeigt)
+   *             (einfarbig navy auf transparent; leer = Name wird als Text angezeigt)
    * url:        Website oder Instagram (leer = nicht klickbar)
    */
   sponsors: [

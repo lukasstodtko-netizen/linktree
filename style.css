@@ -17,18 +17,18 @@
   font-display: swap;
 }
 
+/* Weiße, ruhige Seite: Navy für Text, Light Blue und Salmon nur als Flächen. */
 :root {
   --navy: #162840;
   --light-blue: #96d2d9;
   --salmon: #ff9e7a;
   --white: #ffffff;
 
-  /* Abstufungen nur als Transparenz von Weiß auf Navy, keine neuen Farbtöne */
-  --surface: rgba(255, 255, 255, 0.07);
-  --surface-hover: rgba(255, 255, 255, 0.12);
-  --text-soft: rgba(255, 255, 255, 0.78);
-  --text-faint: rgba(255, 255, 255, 0.58);
-  --line: rgba(255, 255, 255, 0.14);
+  /* Abstufungen nur als Transparenz von Navy auf Weiß, keine neuen Farbtöne */
+  --text-soft: rgba(22, 40, 64, 0.78);
+  --text-faint: rgba(22, 40, 64, 0.58);
+  --line: rgba(22, 40, 64, 0.14);
+  --hover: rgba(150, 210, 217, 0.18);
 
   --radius: 0;
   --font: "Glacial Indifference", Arial, sans-serif;
@@ -42,8 +42,8 @@ body {
   min-height: 100vh;
   font-family: var(--font);
   font-size: 17px;
-  color: var(--white);
-  background: var(--navy);
+  color: var(--navy);
+  background: var(--white);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -55,60 +55,55 @@ a { color: inherit; }
   padding: 0 16px 40px;
 }
 
-/* ---------- Kopf: Foto frei, darunter Navy-Block mit Logo ---------- */
+/* ---------- Kopf: Logo auf Weiß, Foto, darunter das M-Muster ---------- */
 .hero {
   position: relative;
-  margin: 0 -16px;
+  margin: 0 -16px 32px;
+}
+.hero-brand { padding: 40px 24px 28px; text-align: center; }
+.hero .logo { width: 240px; max-width: 70%; height: auto; display: inline-block; }
+.hero h1 {
+  font-weight: 700;
+  font-size: clamp(24px, 6.4vw, 30px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 22px 0 0;
 }
 .hero-photo {
   display: block;
   width: 100%;
-  height: 300px;
+  height: 280px;
   object-fit: cover;
   object-position: center 40%;
 }
-.hero-brand { padding: 28px 24px 26px; }
-.hero .logo { width: 260px; max-width: 72%; height: auto; display: block; }
-.hero h1 {
-  font-weight: 700;
-  font-size: clamp(26px, 7vw, 32px);
-  line-height: 1.05;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  margin: 18px 0 0;
-}
-
-.hero.compact .hero-photo { height: 170px; }
-.hero.compact .logo { width: 170px; }
-
-/* Bloques: versetzte Quadrate in Salmon, Weiß und Light Blue; Navy ist der Rahmen darunter */
-.bloques {
+.m-band {
   display: block;
   width: 100%;
-  height: 72px;
-  background: url("assets/bloques.svg") left top / auto 100% no-repeat;
+  height: 48px;
+  background: url("assets/m-band.svg") left top / auto 100% no-repeat;
 }
-.hero.compact .bloques { height: 48px; }
-.hero { margin-bottom: 8px; }
+
+.hero.compact .hero-brand { padding-top: 56px; }
+.hero.compact .logo { width: 150px; }
+.hero.compact .hero-photo { height: 150px; }
+.hero.compact .m-band { height: 36px; }
 
 .back {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 16px;
+  left: 16px;
   z-index: 1;
-  padding: 6px 12px;
-  border-radius: 0;
-  background: var(--navy);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
 }
-.back:hover { color: var(--salmon); }
+.back:hover { text-decoration: underline; }
 
 /* ---------- Link-Buttons ---------- */
-.links { display: flex; flex-direction: column; gap: 12px; }
+.links { display: flex; flex-direction: column; gap: 10px; }
 
 .btn {
   display: flex;
@@ -116,19 +111,19 @@ a { color: inherit; }
   gap: 14px;
   width: 100%;
   padding: 16px 18px;
-  border: 0;
-  border-left: 6px solid var(--accent, var(--white));
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--accent, var(--navy));
   border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--white);
+  background: var(--white);
+  color: var(--navy);
   font: inherit;
   text-decoration: none;
   text-align: left;
   cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
+  transition: background 0.15s ease;
 }
-.btn:hover { background: var(--surface-hover); transform: translateY(-2px); }
-.btn:focus-visible, .copy:focus-visible, .sponsor:focus-visible { outline: 2px solid var(--salmon); outline-offset: 2px; }
+.btn:hover { background: var(--hover); }
+.btn:focus-visible, .copy:focus-visible, .sponsor:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .btn .label {
   flex: 1;
   font-weight: 700;
@@ -145,21 +140,20 @@ a { color: inherit; }
   text-transform: none;
   color: var(--text-soft);
 }
-.btn .icon-wrap { color: var(--accent, var(--white)); display: flex; }
+.btn .icon-wrap { color: var(--navy); display: flex; }
 .btn .arrow { color: var(--text-faint); display: flex; }
 .btn svg { width: 24px; height: 24px; flex-shrink: 0; }
 .btn .arrow svg { width: 18px; height: 18px; }
 
 /* Collab: Salmon-Fläche mit Navy-Text */
 .btn-primary {
-  border-left: 0;
+  border: 0;
   background: var(--salmon);
-  color: var(--navy);
 }
 .btn-primary:hover { background: var(--salmon); }
 .btn-primary .icon-wrap, .btn-primary .arrow, .btn-primary .sub { color: var(--navy); }
 
-.accent-white { --accent: var(--white); }
+.accent-white { --accent: var(--navy); }
 .accent-blue { --accent: var(--light-blue); }
 .accent-salmon { --accent: var(--salmon); }
 
@@ -169,14 +163,14 @@ a { color: inherit; }
   font-size: 13px;
   font-weight: 700;
   padding: 2px 9px;
-  border-radius: 0;
 }
 
 /* ---------- Collab-Formular ---------- */
 .collab {
   display: none;
   padding: 20px 18px;
-  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  border-top: 0;
   background: var(--white);
   color: var(--navy);
 }
@@ -194,13 +188,14 @@ a { color: inherit; }
   width: 100%;
   padding: 12px;
   border-radius: 0;
-  border: 2px solid var(--light-blue);
+  border: 1px solid var(--line);
+  border-bottom: 2px solid var(--navy);
   background: var(--white);
   color: var(--navy);
   font: inherit;
 }
 .collab textarea { min-height: 110px; resize: vertical; }
-.collab input:focus, .collab select:focus, .collab textarea:focus { outline: none; border-color: var(--navy); }
+.collab input:focus, .collab select:focus, .collab textarea:focus { outline: none; border-bottom-color: var(--salmon); }
 .collab .send {
   width: 100%;
   margin-top: 16px;
@@ -240,10 +235,10 @@ a { color: inherit; }
   white-space: nowrap;
 }
 .copy svg { width: 16px; height: 16px; }
-.collab .hint { font-size: 14px; margin: 8px 0 0; text-align: right; }
+.collab .hint { font-size: 14px; margin: 8px 0 0; text-align: right; color: var(--text-soft); }
 
 /* ---------- Abschnitte ---------- */
-.section { margin-top: 48px; }
+.section { margin-top: 56px; }
 .section-title {
   font-weight: 700;
   font-size: 13px;
@@ -251,9 +246,10 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--text-faint);
   margin: 0 0 14px;
+  text-align: center;
 }
 
-/* ---------- Partner: ruhige Reihe, einfarbig weiß ---------- */
+/* ---------- Partner: ruhige Reihe, einfarbig navy ---------- */
 .sponsors {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -268,7 +264,7 @@ a { color: inherit; }
   min-height: 96px;
   padding: 16px 8px;
   border-bottom: 1px solid var(--line);
-  color: var(--white);
+  color: var(--navy);
   text-decoration: none;
   text-align: center;
 }
@@ -289,17 +285,17 @@ a { color: inherit; }
 .sponsor.main { grid-column: 1 / -1; min-height: 120px; padding: 22px 8px 18px; }
 .sponsor.main .name { font-size: 24px; }
 .sponsor.main img { height: 104px; }
-.sponsor.main .role { color: var(--salmon); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; font-size: 12px; }
-a.sponsor:hover .name { color: var(--light-blue); }
+.sponsor.main .role { color: var(--navy); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; font-size: 12px; }
+a.sponsor:hover { background: var(--hover); }
 
 /* ---------- Veranstaltungen ---------- */
 .event {
   display: flex;
   gap: 16px;
   padding: 20px 18px;
-  border-radius: var(--radius);
-  border-top: 8px solid var(--accent, var(--white));
-  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 8px solid var(--accent, var(--navy));
+  background: var(--white);
   margin-bottom: 14px;
 }
 .event-date {
@@ -307,8 +303,7 @@ a.sponsor:hover .name { color: var(--light-blue); }
   width: 66px;
   text-align: center;
   padding: 8px 0;
-  border-radius: 0;
-  background: var(--accent, var(--white));
+  background: var(--accent, var(--navy));
   color: var(--navy);
   align-self: flex-start;
 }
@@ -320,7 +315,7 @@ a.sponsor:hover .name { color: var(--light-blue); }
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent, var(--white));
+  color: var(--text-faint);
   margin: 0 0 6px;
 }
 .event h3 {
@@ -330,11 +325,10 @@ a.sponsor:hover .name { color: var(--light-blue); }
   text-transform: uppercase;
   margin: 0 0 8px;
 }
-.event h3 .edition { color: var(--accent, var(--white)); }
 .event .meta {
   margin: 0 0 10px;
   font-size: 15px;
-  color: var(--light-blue);
+  font-weight: 700;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -342,30 +336,31 @@ a.sponsor:hover .name { color: var(--light-blue); }
 .event p { margin: 0; line-height: 1.5; color: var(--text-soft); }
 .event .event-link {
   display: inline-block;
-  margin-top: 12px;
-  color: var(--salmon);
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--navy);
+  color: var(--white);
   font-weight: 700;
   text-decoration: none;
 }
-.event .event-link:hover { text-decoration: underline; }
+.event .event-link:hover { background: var(--salmon); color: var(--navy); }
 .event .sign { margin-top: 12px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
 .event.past { opacity: 0.6; }
 
 .more { margin: 4px 0 0; color: var(--text-soft); }
-.more a { color: var(--salmon); }
+.more a { color: var(--navy); font-weight: 700; }
 
 .empty {
   padding: 28px 20px;
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--line);
   color: var(--text-soft);
   line-height: 1.5;
 }
-.empty a { color: var(--salmon); }
+.empty a { color: var(--navy); font-weight: 700; }
 
 /* ---------- Footer ---------- */
 footer {
-  margin-top: 48px;
+  margin-top: 56px;
   padding-top: 20px;
   border-top: 1px solid var(--line);
   color: var(--text-faint);

@@ -1,8 +1,9 @@
 # mdnss · The Cycling Madness – Linktree
 
 Eigene Link-in-Bio-Seite für den Instagram-Account von **The Cycling Madness**.
-Gestaltet nach den **mdnss Markenregeln** (nur Navy / Light Blue / Salmon / Weiß, keine Verläufe,
-Schrift Glacial Indifference, Bloques statt runder Ecken,
+Gestaltet nach den **mdnss Markenregeln**: weiße, ruhige Seite mit dem M-Muster aus dem neuen Trikot-Design
+(nur Navy / Light Blue / Salmon / Weiß, keine Verläufe,
+Schrift Glacial Indifference, keine runden Ecken,
 Original-Logo, Seitentexte auf Spanisch, nie „TCM“).
 
 - **Collab anfragen** – kleines Formular, das eine fertig ausgefüllte E-Mail öffnet
