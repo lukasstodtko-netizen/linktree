@@ -1,21 +1,23 @@
-/* Farben und Schriften nach dem mdnss Brand Book */
+/*
+ * mdnss Brand: nur vier Farben (Navy, Light Blue, Salmon, Weiß), keine Verläufe.
+ * Schrift laut Brand: Glacial Indifference. Bis die Schriftdateien da sind,
+ * steht Jost als schlichter Ersatz (wie im Brand Book).
+ */
 :root {
   --navy: #162840;
-  --navy-raised: #1f3656;
-  --navy-hover: #284368;
   --light-blue: #96d2d9;
   --salmon: #ff9e7a;
   --white: #ffffff;
-  --petrol: #345c72;
-  --ice: #d4edf4;
-  --orange: #f46530;
-  --text-soft: #c9dde6;
-  --text-faint: #9fb6c4;
-  --line: rgba(212, 237, 244, 0.14);
-  --radius: 16px;
-  --font-display: "Unbounded", "Arial Black", Arial, sans-serif;
-  /* Brand-Textschrift ist Glacial Indifference; Jost ersetzt sie im Web (wie im Brand Book) */
-  --font-text: "Jost", Arial, sans-serif;
+
+  /* Abstufungen nur als Transparenz von Weiß auf Navy, keine neuen Farbtöne */
+  --surface: rgba(255, 255, 255, 0.07);
+  --surface-hover: rgba(255, 255, 255, 0.12);
+  --text-soft: rgba(255, 255, 255, 0.78);
+  --text-faint: rgba(255, 255, 255, 0.58);
+  --line: rgba(255, 255, 255, 0.14);
+
+  --radius: 14px;
+  --font: "Glacial Indifference", "Jost", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -24,7 +26,7 @@ html, body { margin: 0; }
 
 body {
   min-height: 100vh;
-  font-family: var(--font-text);
+  font-family: var(--font);
   font-size: 17px;
   color: var(--white);
   background: var(--navy);
@@ -39,41 +41,34 @@ a { color: inherit; }
   padding: 0 16px 40px;
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Kopf: Foto frei, darunter Navy-Block mit Logo ---------- */
 .hero {
   position: relative;
   margin: 0 -16px;
-  min-height: 360px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 32px 24px 36px;
-  background: var(--navy) center 40% / cover no-repeat;
-  overflow: hidden;
 }
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(22, 40, 64, 0.97) 0%, rgba(22, 40, 64, 0.72) 45%, rgba(22, 40, 64, 0.12) 100%);
+.hero-photo {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center 40%;
 }
-.hero > * { position: relative; }
-.hero .logo { width: 280px; max-width: 75%; height: auto; display: block; }
-.hero.compact .logo { width: 200px; max-width: 60%; margin-bottom: 20px; }
+.hero-brand { padding: 28px 24px 26px; }
+.hero .logo { width: 260px; max-width: 72%; height: auto; display: block; }
 .hero h1 {
-  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(26px, 7vw, 34px);
-  line-height: 1.04;
+  font-size: clamp(26px, 7vw, 32px);
+  line-height: 1.05;
   text-transform: uppercase;
-  margin: 0;
+  letter-spacing: 0.02em;
+  margin: 18px 0 0;
 }
 
-.hero.compact { min-height: 240px; padding-top: 64px; }
-.hero.compact h1 { font-size: clamp(24px, 6.4vw, 30px); }
+.hero.compact .hero-photo { height: 170px; }
+.hero.compact .logo { width: 170px; }
 
-/* Farbstreifen weiß · light blue · salmon */
-.stripe { display: flex; height: 10px; margin: 0 -16px 32px; }
+/* Geteilte Farbblöcke: Weiß · Light Blue · Salmon */
+.stripe { display: flex; height: 10px; margin: 0 -16px 28px; }
 .stripe span { flex: 1; }
 .stripe span:nth-child(1) { background: var(--white); }
 .stripe span:nth-child(2) { background: var(--light-blue); }
@@ -81,19 +76,21 @@ a { color: inherit; }
 
 .back {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 14px;
+  left: 14px;
   z-index: 1;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--navy);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--white);
   text-decoration: none;
 }
 .back:hover { color: var(--salmon); }
 
-/* ---------- Link buttons ---------- */
+/* ---------- Link-Buttons ---------- */
 .links { display: flex; flex-direction: column; gap: 12px; }
 
 .btn {
@@ -105,7 +102,7 @@ a { color: inherit; }
   border: 0;
   border-left: 6px solid var(--accent, var(--white));
   border-radius: var(--radius);
-  background: var(--navy-raised);
+  background: var(--surface);
   color: var(--white);
   font: inherit;
   text-decoration: none;
@@ -113,20 +110,18 @@ a { color: inherit; }
   cursor: pointer;
   transition: transform 0.15s ease, background 0.15s ease;
 }
-.btn:hover { background: var(--navy-hover); transform: translateY(-2px); }
-.btn:focus-visible { outline: 2px solid var(--salmon); outline-offset: 2px; }
+.btn:hover { background: var(--surface-hover); transform: translateY(-2px); }
+.btn:focus-visible, .copy:focus-visible, .sponsor:focus-visible { outline: 2px solid var(--salmon); outline-offset: 2px; }
 .btn .label {
   flex: 1;
-  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.02em;
+  font-size: 16px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 .btn .sub {
   display: block;
   margin-top: 4px;
-  font-family: var(--font-text);
   font-weight: 400;
   font-size: 15px;
   letter-spacing: 0;
@@ -138,24 +133,24 @@ a { color: inherit; }
 .btn svg { width: 24px; height: 24px; flex-shrink: 0; }
 .btn .arrow svg { width: 18px; height: 18px; }
 
+/* Collab: Salmon-Fläche mit Navy-Text */
 .btn-primary {
   border-left: 0;
   background: var(--salmon);
   color: var(--navy);
 }
-.btn-primary:hover { background: #ffb293; }
+.btn-primary:hover { background: var(--salmon); }
 .btn-primary .icon-wrap, .btn-primary .arrow, .btn-primary .sub { color: var(--navy); }
 
 .accent-white { --accent: var(--white); }
 .accent-blue { --accent: var(--light-blue); }
 .accent-salmon { --accent: var(--salmon); }
-.accent-orange { --accent: var(--orange); }
 
 .badge {
   background: var(--light-blue);
   color: var(--navy);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 2px 9px;
   border-radius: 999px;
 }
@@ -165,17 +160,16 @@ a { color: inherit; }
   display: none;
   padding: 20px 18px;
   border-radius: var(--radius);
-  background: var(--ice);
+  background: var(--white);
   color: var(--navy);
 }
 .collab.open { display: block; }
 .collab label {
   display: block;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--petrol);
   margin: 14px 0 6px;
 }
 .collab label:first-child { margin-top: 0; }
@@ -183,13 +177,13 @@ a { color: inherit; }
   width: 100%;
   padding: 12px;
   border-radius: 10px;
-  border: 2px solid transparent;
+  border: 2px solid var(--light-blue);
   background: var(--white);
   color: var(--navy);
   font: inherit;
 }
 .collab textarea { min-height: 110px; resize: vertical; }
-.collab input:focus, .collab select:focus, .collab textarea:focus { outline: none; border-color: var(--petrol); }
+.collab input:focus, .collab select:focus, .collab textarea:focus { outline: none; border-color: var(--navy); }
 .collab .send {
   width: 100%;
   margin-top: 16px;
@@ -198,61 +192,97 @@ a { color: inherit; }
   border-radius: 12px;
   background: var(--navy);
   color: var(--white);
-  font-family: var(--font-display);
+  font: inherit;
   font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.04em;
+  font-size: 15px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
 }
-.collab .send:hover { background: var(--petrol); }
-.collab .hint { font-size: 14px; color: var(--petrol); margin: 12px 0 0; text-align: center; }
-.collab .hint a { color: var(--navy); font-weight: 600; }
+.copy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 14px;
+}
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--light-blue);
+  color: var(--navy);
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.copy svg { width: 16px; height: 16px; }
+.collab .hint { font-size: 14px; margin: 8px 0 0; text-align: right; }
 
 /* ---------- Abschnitte ---------- */
 .section { margin-top: 48px; }
 .section-title {
-  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin: 0 0 16px;
+  color: var(--text-faint);
+  margin: 0 0 14px;
 }
 
-/* ---------- Sponsoren ---------- */
+/* ---------- Partner: ruhige Reihe, einfarbig weiß ---------- */
 .sponsors {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
 }
 .sponsor {
-  display: grid;
-  place-items: center;
-  min-height: 88px;
-  padding: 14px;
-  border-radius: var(--radius);
-  background: var(--white);
-  color: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 96px;
+  padding: 16px 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--white);
   text-decoration: none;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
-  text-transform: uppercase;
   text-align: center;
-  transition: transform 0.15s ease;
 }
-a.sponsor:hover { transform: translateY(-2px); }
-.sponsor img { max-width: 100%; max-height: 52px; object-fit: contain; }
+.sponsor + .sponsor:not(.main) { border-left: 1px solid var(--line); }
+.sponsor.main + .sponsor { border-left: 0; }
+.sponsor .name {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.sponsor .role {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--text-faint);
+}
+.sponsor img { max-width: 100%; height: 36px; object-fit: contain; }
+.sponsor.main { grid-column: 1 / -1; min-height: 120px; }
+.sponsor.main .name { font-size: 24px; }
+.sponsor.main img { height: 56px; }
+.sponsor.main .role { color: var(--salmon); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; font-size: 12px; }
+a.sponsor:hover .name { color: var(--light-blue); }
 
 /* ---------- Veranstaltungen ---------- */
 .event {
-  position: relative;
   display: flex;
   gap: 16px;
   padding: 20px 18px;
   border-radius: var(--radius);
   border-top: 8px solid var(--accent, var(--white));
-  background: var(--navy-raised);
+  background: var(--surface);
   margin-bottom: 14px;
 }
 .event-date {
@@ -265,21 +295,20 @@ a.sponsor:hover { transform: translateY(-2px); }
   color: var(--navy);
   align-self: flex-start;
 }
-.event-date .day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 1.1; }
-.event-date .month { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; }
+.event-date .day { display: block; font-weight: 700; font-size: 28px; line-height: 1.1; }
+.event-date .month { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; }
 .event-date .year { display: block; font-size: 12px; }
 .event .type {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent, var(--white));
   margin: 0 0 6px;
 }
 .event h3 {
-  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.15;
   text-transform: uppercase;
   margin: 0 0 8px;
@@ -298,7 +327,7 @@ a.sponsor:hover { transform: translateY(-2px); }
   display: inline-block;
   margin-top: 12px;
   color: var(--salmon);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
 }
 .event .event-link:hover { text-decoration: underline; }
@@ -308,7 +337,7 @@ a.sponsor:hover { transform: translateY(-2px); }
 .empty {
   padding: 28px 20px;
   border-radius: var(--radius);
-  background: var(--navy-raised);
+  background: var(--surface);
   color: var(--text-soft);
   line-height: 1.5;
 }
@@ -316,14 +345,16 @@ a.sponsor:hover { transform: translateY(-2px); }
 
 /* ---------- Footer ---------- */
 footer {
-  margin-top: 56px;
-  padding-top: 24px;
+  margin-top: 48px;
+  padding-top: 20px;
   border-top: 1px solid var(--line);
   color: var(--text-faint);
   font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
 }
-footer a { color: var(--text-faint); }
+footer a { color: var(--text-soft); }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn, .sponsor { transition: none; }
+  .btn { transition: none; }
 }

@@ -13,7 +13,7 @@ window.SITE = {
 
   // Logo und Foto aus dem Brand Book (Logo nicht verändern oder nachbauen)
   logo: "assets/logo-white.png",
-  hero: "assets/hero.jpg",
+  hero: "assets/hero.webp",
 
   // E-Mail-Adresse für Collab-Anfragen
   email: "thecyclingmdnss@gmail.com",
@@ -33,7 +33,7 @@ window.SITE = {
    * Veranstaltungen
    * date:    "JJJJ-MM-TT" – vergangene Termine wandern automatisch ins Archiv.
    * type:    "salida" | "evento" | "reto" | "carrera"
-   *          (die vier Formen aus dem Brand Book, jede mit eigener Akzentfarbe)
+   *          (die vier Formen aus dem Brand Book; Akzent Weiß, Light Blue oder Salmon)
    * edition: optional, römische Zahl, z. B. "IV"
    * Leer lassen = der Button „Próximas experiencias“ führt direkt zu den
    * Veranstaltungen im Strava Club (stravaEvents). Termine hier nur eintragen,
@@ -47,15 +47,17 @@ window.SITE = {
   ],
 
   /*
-   * Sponsoren
-   * logo: Bild in assets/sponsors/ ablegen, z. B. "assets/sponsors/julbo.png"
-   *       (leer = Name wird als Text angezeigt)
-   * url:  Website des Sponsors (leer = Kachel ist nicht klickbar)
+   * Partner 2027
+   * main: true  = Hauptsponsor, wird größer und zuerst angezeigt
+   * role:       was der Partner beisteuert (Spanisch, kurz)
+   * logo:       Bild in assets/sponsors/ ablegen, z. B. "assets/sponsors/julbo.svg"
+   *             (einfarbig weiß oder navy; leer = Name wird als Text angezeigt)
+   * url:        Website oder Instagram (leer = nicht klickbar)
    */
   sponsors: [
-    { name: "Congelats del Nord", url: "https://congelatsdelnord.com", logo: "" },
-    { name: "Julbo", url: "https://www.julbo.com", logo: "" },
-    { name: "Jordan Workshop", url: "https://www.instagram.com/jordan.workshop/", logo: "" },
-    { name: "MØDE Coffee", url: "https://www.instagram.com/the.mode.coffee/", logo: "" }
+    { name: "La Lonja", role: "Patrocinador principal", main: true, url: "", logo: "" },
+    { name: "Gobik", role: "Equipación y eventos", url: "https://gobik.com", logo: "" },
+    { name: "Julbo", role: "Cascos, gafas y eventos", url: "https://www.julbo.com", logo: "" },
+    { name: "MØDE Coffee", role: "Café", url: "https://www.instagram.com/the.mode.coffee/", logo: "" }
   ]
 };

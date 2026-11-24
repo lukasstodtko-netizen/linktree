@@ -11,6 +11,7 @@
     youtube: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.75 15.02 5.75-3.02-5.75-3.02z"/></svg>',
     route: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>',
     heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
   };
 
@@ -19,7 +20,7 @@
     salida: { label: "Salida", accent: "accent-white" },
     evento: { label: "Evento", accent: "accent-blue" },
     reto: { label: "Reto", accent: "accent-salmon" },
-    carrera: { label: "Carrera", accent: "accent-orange" }
+    carrera: { label: "Carrera", accent: "accent-blue" }
   };
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -37,19 +38,23 @@
   function renderHero() {
     const el = $("#hero");
     if (!el) return;
-    if (S.hero) el.style.backgroundImage = `url("${S.hero}")`;
     const title = el.dataset.title;
-    const headline = title ? `<h1>${esc(title)}</h1>` : "";
     el.insertAdjacentHTML("beforeend", `
-      <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
-      ${headline}`);
+      ${S.hero ? `<img class="hero-photo" src="${esc(S.hero)}" alt="Grupeta mdnss rodando en el circuito" width="960" height="816">` : ""}
+      <div class="hero-brand">
+        <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
+        ${title ? `<h1>${esc(title)}</h1>` : ""}
+      </div>`);
   }
 
   function renderFooter() {
     const el = $("#footer");
     if (!el) return;
     el.innerHTML = `
-      © ${new Date().getFullYear()} ${esc(S.name)} · <a href="mailto:${esc(S.email)}">${esc(S.email)}</a>`;
+      <a href="${esc(S.instagram)}" target="_blank" rel="noopener">Instagram</a> ·
+      <a href="${esc(S.strava)}" target="_blank" rel="noopener">Strava</a> ·
+      <a href="mailto:${esc(S.email)}">${esc(S.email)}</a>
+      <br>© ${new Date().getFullYear()} ${esc(S.name)}`;
   }
 
   // ---------- Startseite ----------
@@ -65,10 +70,29 @@
   function renderLinks() {
     const el = $("#links");
     if (!el) return;
-    let html = `
+    let html = "";
+
+    // 1. Lo siguiente: eigene Termine, sonst die Events im Strava Club
+    if (upcoming.length) {
+      html += button({
+        href: "events.html", icon: "calendar", title: "Próximas experiencias",
+        sub: `Lo siguiente: ${upcoming[0].title}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
+      });
+    } else if (S.stravaEvents) {
+      html += button({ href: S.stravaEvents, icon: "calendar", title: "Próximas experiencias", sub: "Salidas y eventos del club en Strava", accent: "accent-blue" });
+    }
+
+    // 2. Club
+    if (S.strava) html += button({ href: S.strava, icon: "strava", title: "Club de Strava", sub: "Únete y rueda con la grupeta", accent: "accent-salmon" });
+
+    // 3. Weitere Links aus data.js
+    (S.links || []).forEach((l) => { html += button({ href: l.url, icon: l.icon, title: l.title, sub: l.sub, accent: "accent-white" }); });
+
+    // 4. Collab
+    html += `
       <button class="btn btn-primary" id="collab-toggle" aria-expanded="false" aria-controls="collab">
         <span class="icon-wrap">${ICONS.mail}</span>
-        <span class="label">Colabora con nosotros<span class="sub">Escríbenos directamente por mail</span></span>
+        <span class="label">Colabora con nosotros<span class="sub">Marcas, eventos y contenido</span></span>
         <span class="arrow">${ICONS.arrow}</span>
       </button>
       <form class="collab" id="collab" novalidate>
@@ -85,20 +109,12 @@
         <label for="c-msg">Mensaje</label>
         <textarea id="c-msg" name="message" placeholder="Cuéntanos tu idea…"></textarea>
         <button type="submit" class="send">Abrir mail</button>
-        <p class="hint">Se abre tu app de correo. O escríbenos a <a href="mailto:${esc(S.email)}">${esc(S.email)}</a></p>
+        <div class="copy-row">
+          <span>¿No se abre tu app de correo?</span>
+          <button type="button" class="copy" id="copy-mail">${ICONS.copy}<span>Copiar mail</span></button>
+        </div>
+        <p class="hint">${esc(S.email)}</p>
       </form>`;
-
-    if (S.strava) html += button({ href: S.strava, icon: "strava", title: "Club de Strava", sub: "Únete y rueda con la grupeta", accent: "accent-orange" });
-    if (upcoming.length) {
-      html += button({
-        href: "events.html", icon: "calendar", title: "Próximas experiencias",
-        sub: `Lo siguiente: ${upcoming[0].title}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
-      });
-    } else if (S.stravaEvents) {
-      html += button({ href: S.stravaEvents, icon: "calendar", title: "Próximas experiencias", sub: "Salidas y eventos del club en Strava", accent: "accent-blue" });
-    }
-    (S.links || []).forEach((l) => { html += button({ href: l.url, icon: l.icon, title: l.title, sub: l.sub, accent: "accent-salmon" }); });
-    if (S.instagram) html += button({ href: S.instagram, icon: "instagram", title: "Instagram", sub: "Fotos, retos y backstage", accent: "accent-white" });
 
     el.innerHTML = html;
 
@@ -118,18 +134,38 @@
       const body = `¡Hola, equipo mdnss!\n\n${msg || "Nos encantaría colaborar con vosotros."}\n\nTipo: ${type}\n\nUn saludo,\n${name}`;
       window.location.href = `mailto:${S.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
+
+    // Im Instagram-Browser öffnet mailto: oft nichts – deshalb Adresse kopierbar machen
+    const copyBtn = $("#copy-mail");
+    copyBtn.addEventListener("click", async () => {
+      const label = copyBtn.querySelector("span");
+      try {
+        await navigator.clipboard.writeText(S.email);
+      } catch {
+        const tmp = document.createElement("textarea");
+        tmp.value = S.email;
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand("copy");
+        tmp.remove();
+      }
+      label.textContent = "¡Copiado!";
+      setTimeout(() => { label.textContent = "Copiar mail"; }, 2000);
+    });
   }
 
   function renderSponsors() {
     const el = $("#sponsors");
     if (!el) return;
-    const list = S.sponsors || [];
+    const list = (S.sponsors || []).slice().sort((a, b) => (b.main ? 1 : 0) - (a.main ? 1 : 0));
     if (!list.length) { el.closest(".section").remove(); return; }
     el.innerHTML = list.map((s) => {
-      const inner = s.logo ? `<img src="${esc(s.logo)}" alt="${esc(s.name)}" loading="lazy">` : esc(s.name);
+      const name = s.logo ? `<img src="${esc(s.logo)}" alt="${esc(s.name)}" loading="lazy">` : `<span class="name">${esc(s.name)}</span>`;
+      const inner = `${name}${s.role ? `<span class="role">${esc(s.role)}</span>` : ""}`;
+      const cls = `sponsor${s.main ? " main" : ""}`;
       return s.url
-        ? `<a class="sponsor" href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.name)}">${inner}</a>`
-        : `<div class="sponsor" title="${esc(s.name)}">${inner}</div>`;
+        ? `<a class="${cls}" href="${esc(s.url)}" target="_blank" rel="noopener">${inner}</a>`
+        : `<div class="${cls}">${inner}</div>`;
     }).join("");
   }
 
