@@ -34,6 +34,45 @@
   const upcoming = events.filter((e) => parseDate(e.date) >= today);
   const past = events.filter((e) => parseDate(e.date) < today).reverse();
   const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const daysUntil = (e) => Math.round((parseDate(e.date) - today) / 86400000);
+  const countdown = (e) => {
+    const n = daysUntil(e);
+    return n === 0 ? "¡Es hoy!" : n === 1 ? "Mañana" : `Faltan ${n} días`;
+  };
+
+  // ---------- Zahlen-Leiste ----------
+  function renderStats() {
+    const el = $("#stats");
+    if (!el) return;
+    if (!(S.stats || []).length) { el.remove(); return; }
+    el.innerHTML = S.stats.map((st) => `
+      <div class="stat"><span class="value">${esc(st.value)}</span><span class="label">${esc(st.label)}</span></div>`).join("");
+  }
+
+  // ---------- Nächstes Erlebnis: großer Datumsblock ----------
+  function renderNext() {
+    const el = $("#next");
+    if (!el) return;
+    const e = upcoming[0];
+    if (!e) { el.remove(); return; }
+    const d = parseDate(e.date);
+    const t = TYPES[e.type] || TYPES.evento;
+    el.innerHTML = `
+      <p class="kicker">Lo siguiente · ${esc(t.label)}</p>
+      <div class="big-date">${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}</div>
+      <h2 class="next-title">${esc(e.title)}</h2>
+      <div class="next-facts">
+        <span>${DAYS[d.getDay()]}${e.time ? ` · ${esc(e.time)} h` : ""}</span>
+        ${e.distance ? `<span>${esc(e.distance)}</span>` : ""}
+      </div>
+      <div class="next-actions">
+        ${e.link ? `<a class="cta" href="${esc(e.link)}" target="_blank" rel="noopener">Apúntate ${ICONS.arrow}</a>` : ""}
+        <span class="countdown">${countdown(e)}</span>
+      </div>
+      ${e.route ? `<img class="next-route" src="${esc(e.route)}" alt="Ruta de ${esc(e.title)}">` : ""}`;
+  }
 
   // ---------- Kopf / Fuß ----------
   function renderHero() {
@@ -41,12 +80,12 @@
     if (!el) return;
     const title = el.dataset.title;
     el.insertAdjacentHTML("beforeend", `
+      ${S.hero ? `<img class="hero-photo" src="${esc(S.hero)}" alt="Grupeta mdnss rodando en el circuito" width="960" height="816">` : ""}
+      <div class="m-detail" aria-hidden="true"></div>
       <div class="hero-brand">
         <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
         ${title ? `<h1>${esc(title)}</h1>` : ""}
-      </div>
-      ${S.hero ? `<img class="hero-photo" src="${esc(S.hero)}" alt="Grupeta mdnss rodando en el circuito" width="960" height="816">` : ""}
-      <div class="m-detail" aria-hidden="true"></div>`);
+      </div>`);
   }
 
   function renderFooter() {
@@ -77,8 +116,8 @@
     // 1. Lo siguiente: eigene Termine, sonst die Events im Strava Club
     if (upcoming.length) {
       html += button({
-        href: "events.html", icon: "calendar", title: "Próximas experiencias",
-        sub: `Lo siguiente: ${upcoming[0].title} · ${parseDate(upcoming[0].date).getDate()} ${MONTHS[parseDate(upcoming[0].date).getMonth()]}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
+        href: "events.html", icon: "calendar", title: "Todas las experiencias",
+        sub: upcoming.length > 1 ? `También: ${upcoming[1].title} · ${parseDate(upcoming[1].date).getDate()} ${MONTHS[parseDate(upcoming[1].date).getMonth()]}` : "Salidas, retos y eventos", badge: `${upcoming.length}`, accent: "accent-blue", external: false
       });
     } else if (S.stravaEvents) {
       html += button({ href: S.stravaEvents, icon: "calendar", title: "Próximas experiencias", sub: "Salidas y eventos del club en Strava", accent: "accent-blue" });
@@ -183,12 +222,13 @@
         <span class="year">${d.getFullYear()}</span>
       </div>
       <div>
-        <p class="type">${t.label}</p>
+        <p class="type">${t.label}${!isPast ? ` · ${countdown(e)}` : ""}</p>
         <h3>${esc(e.title)}${e.edition ? ` <span class="edition">${esc(e.edition)}</span>` : ""}</h3>
         ${meta.length ? `<p class="meta">${meta.map((m) => `<span>${m}</span>`).join("")}</p>` : ""}
         ${e.description ? `<p>${esc(e.description)}</p>` : ""}
         ${e.link && !isPast ? `<a class="event-link" href="${esc(e.link)}" target="_blank" rel="noopener">Info e inscripción →</a>` : ""}
         <p class="sign">Una experiencia mdnss</p>
+        ${e.route ? `<img class="card-route" src="${esc(e.route)}" alt="Ruta de ${esc(e.title)}" loading="lazy">` : ""}
       </div>
     </article>`;
   }
@@ -208,10 +248,29 @@
     else pastEl.closest(".section").remove();
   }
 
+  // Das M läuft beim Scrollen seitwärts, wie ein Peloton
+  function moveM() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const strips = document.querySelectorAll(".m-detail, .m-mark");
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const x = -window.scrollY * 0.5;
+        strips.forEach((s) => { s.style.backgroundPositionX = `${x}px`; });
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
   document.title = document.title.replace("{name}", S.name);
   renderHero();
+  renderStats();
+  renderNext();
   renderLinks();
   renderSponsors();
   renderEvents();
   renderFooter();
+  moveM();
 })();

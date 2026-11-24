@@ -24,6 +24,13 @@ window.SITE = {
   // Veranstaltungen des Strava Clubs (Club-ID 1192662)
   stravaEvents: "https://www.strava.com/clubs/1192662/group_events",
 
+  // Zahlen-Leiste unter dem Kopf (kurz halten, Spanisch)
+  stats: [
+    { value: "3", label: "años rodando" },
+    { value: "999", label: "ciclistas en Strava" },
+    { value: "4", label: "grandes eventos en 2027" }
+  ],
+
   // Weitere Links (optional). Beispiel:
   // { title: "Tienda", sub: "Maillots y más", url: "https://...", icon: "shop" }
   // Verfügbare Icons: link, shop, youtube, route, heart
@@ -35,6 +42,7 @@ window.SITE = {
    * type:    "salida" | "evento" | "reto" | "carrera"
    *          (die vier Formen aus dem Brand Book; Akzent Weiß, Light Blue oder Salmon)
    * edition: optional, römische Zahl, z. B. "IV"
+   * route:   optional, SVG der Strecke als Linie (assets/routes/…)
    * Leer lassen = der Button „Próximas experiencias“ führt direkt zu den
    * Veranstaltungen im Strava Club (stravaEvents). Termine hier nur eintragen,
    * wenn sie zusätzlich auf einer eigenen Seite erscheinen sollen.
@@ -60,7 +68,8 @@ window.SITE = {
       location: "Palma → Palma · ferry desde Barcelona el viernes 9",
       distance: "301,6 km · 3.832 m de desnivel",
       description: "Vuelta a la isla en un día. Plazas para 20 a 30 ciclistas. Incluye ferry de ida, desayuno, avituallamientos, furgoneta de apoyo y maillot del evento de Gobik.",
-      link: "https://mallorcasurvival.netlify.app"
+      link: "https://mallorcasurvival.netlify.app",
+      route: "assets/routes/mallorca-survival.svg"
     }
   ],
 
