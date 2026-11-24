@@ -2,7 +2,7 @@
 
 Eigene Link-in-Bio-Seite für den Instagram-Account von **The Cycling Madness**.
 Gestaltet nach den **mdnss Markenregeln** (nur Navy / Light Blue / Salmon / Weiß, keine Verläufe,
-Schrift Glacial Indifference – bis die Dateien da sind, Jost als Ersatz,
+Schrift Glacial Indifference, Bloques statt runder Ecken,
 Original-Logo, Seitentexte auf Spanisch, nie „TCM“).
 
 - **Collab anfragen** – kleines Formular, das eine fertig ausgefüllte E-Mail öffnet
