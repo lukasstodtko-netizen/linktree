@@ -55,9 +55,9 @@ window.SITE = {
    * url:        Website oder Instagram (leer = nicht klickbar)
    */
   sponsors: [
-    { name: "La Lonja", role: "Patrocinador principal", main: true, url: "", logo: "" },
-    { name: "Gobik", role: "Equipación y eventos", url: "https://gobik.com", logo: "" },
-    { name: "Julbo", role: "Cascos, gafas y eventos", url: "https://www.julbo.com", logo: "" },
-    { name: "MØDE Coffee", role: "Café", url: "https://www.instagram.com/the.mode.coffee/", logo: "" }
+    { name: "La Lonja", role: "Patrocinador principal", main: true, url: "", logo: "assets/sponsors/lalonja.svg" },
+    { name: "Gobik", role: "Equipación y eventos", url: "https://gobik.com", logo: "assets/sponsors/gobik.svg" },
+    { name: "Julbo", role: "Cascos, gafas y eventos", url: "https://www.julbo.com", logo: "assets/sponsors/julbo.png" },
+    { name: "MØDE Coffee", role: "Café", url: "https://www.instagram.com/the.mode.coffee/", logo: "assets/sponsors/mode.png" }
   ]
 };
