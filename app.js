@@ -41,12 +41,13 @@
     if (!el) return;
     const title = el.dataset.title;
     el.insertAdjacentHTML("beforeend", `
-      <div class="hero-brand">
-        <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
-        ${title ? `<h1>${esc(title)}</h1>` : ""}
+      <div class="hero-pattern">
+        <div class="logo-card">
+          <img class="logo" src="${esc(S.logo)}" alt="mdnss · ${esc(S.name)}">
+          ${title ? `<h1>${esc(title)}</h1>` : ""}
+        </div>
       </div>
-      ${S.hero ? `<img class="hero-photo" src="${esc(S.hero)}" alt="Grupeta mdnss rodando en el circuito" width="960" height="816">` : ""}
-      <div class="m-band" aria-hidden="true"></div>`);
+      ${S.hero ? `<img class="hero-photo" src="${esc(S.hero)}" alt="Grupeta mdnss rodando en el circuito" width="960" height="816">` : ""}`);
   }
 
   function renderFooter() {
