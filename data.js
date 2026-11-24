@@ -41,6 +41,17 @@ window.SITE = {
    */
   events: [
     {
+      type: "salida",
+      title: "Capsule Ride BCN\u2060–\u2060GIR\u2060–\u2060BCN",
+      edition: "",
+      date: "2026-12-19",
+      time: "07:30",
+      location: "Salida desde MØDE Coffee",
+      distance: "185 km · 1.300 m de desnivel",
+      description: "Barcelona – Girona – Barcelona. 10 € + un alimento no perecedero para el Banc dels Aliments. Coffee + cookie antes de salir y avituallamientos en ruta.",
+      link: "https://www.grouprides.cc/rides/capsule-ride-barcelona-girona-barcelona-2026-12-19"
+    },
+    {
       type: "reto",
       title: "Mallorca Survival",
       edition: "",

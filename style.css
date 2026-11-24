@@ -311,6 +311,7 @@ a.sponsor:hover { background: var(--hover); }
   color: var(--navy);
   align-self: flex-start;
 }
+.accent-white .event-date { color: var(--white); }
 .event-date .day { display: block; font-weight: 700; font-size: 28px; line-height: 1.1; }
 .event-date .month { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; }
 .event-date .year { display: block; font-size: 12px; }
