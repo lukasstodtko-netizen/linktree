@@ -33,6 +33,7 @@
   const events = (S.events || []).slice().sort((a, b) => parseDate(a.date) - parseDate(b.date));
   const upcoming = events.filter((e) => parseDate(e.date) >= today);
   const past = events.filter((e) => parseDate(e.date) < today).reverse();
+  const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
   // ---------- Kopf / Fuß ----------
   function renderHero() {
@@ -77,7 +78,7 @@
     if (upcoming.length) {
       html += button({
         href: "events.html", icon: "calendar", title: "Próximas experiencias",
-        sub: `Lo siguiente: ${upcoming[0].title}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
+        sub: `Lo siguiente: ${upcoming[0].title} · ${parseDate(upcoming[0].date).getDate()} ${MONTHS[parseDate(upcoming[0].date).getMonth()]}`, badge: `${upcoming.length}`, accent: "accent-blue", external: false
       });
     } else if (S.stravaEvents) {
       html += button({ href: S.stravaEvents, icon: "calendar", title: "Próximas experiencias", sub: "Salidas y eventos del club en Strava", accent: "accent-blue" });
@@ -171,7 +172,6 @@
   }
 
   // ---------- Veranstaltungsseite ----------
-  const MONTHS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
   function eventCard(e, isPast) {
     const d = parseDate(e.date);
     const t = TYPES[e.type] || TYPES.evento;
@@ -197,7 +197,8 @@
     const up = $("#events-upcoming");
     if (!up) return;
     up.innerHTML = upcoming.length
-      ? upcoming.map((e) => eventCard(e, false)).join("")
+      ? upcoming.map((e) => eventCard(e, false)).join("") +
+        (S.stravaEvents ? `<p class="more">Salidas sociales y más planes en el <a href="${esc(S.stravaEvents)}" target="_blank" rel="noopener">club de Strava</a>.</p>` : "")
       : `<div class="empty">Ahora mismo estamos preparando la próxima locura.<br>
            Síguenos en <a href="${esc(S.instagram)}" target="_blank" rel="noopener">Instagram</a>
            o mira los <a href="${esc(S.stravaEvents || S.strava)}" target="_blank" rel="noopener">eventos del club en Strava</a>.</div>`;

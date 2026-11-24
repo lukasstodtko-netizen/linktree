@@ -351,6 +351,9 @@ a.sponsor:hover .name { color: var(--light-blue); }
 .event .sign { margin-top: 12px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
 .event.past { opacity: 0.6; }
 
+.more { margin: 4px 0 0; color: var(--text-soft); }
+.more a { color: var(--salmon); }
+
 .empty {
   padding: 28px 20px;
   border-radius: var(--radius);

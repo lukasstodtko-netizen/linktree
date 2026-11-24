@@ -40,10 +40,17 @@ window.SITE = {
    * wenn sie zusätzlich auf einer eigenen Seite erscheinen sollen.
    */
   events: [
-    // Beispiel:
-    // { type: "salida", title: "Café & ruta", edition: "", date: "2026-11-14", time: "09:00",
-    //   location: "Punto de salida", distance: "80 km · ritmo social",
-    //   description: "Salida en grupeta …", link: "https://www.strava.com/clubs/1192662/group_events/…" }
+    {
+      type: "reto",
+      title: "Mallorca Survival",
+      edition: "",
+      date: "2027-04-10",
+      time: "06:30",
+      location: "Palma → Palma · ferry desde Barcelona el viernes 9",
+      distance: "301,6 km · 3.832 m de desnivel",
+      description: "Vuelta a la isla en un día. Plazas para 20 a 30 ciclistas. Incluye ferry de ida, desayuno, avituallamientos, furgoneta de apoyo y maillot del evento de Gobik.",
+      link: "https://mallorcasurvival.netlify.app"
+    }
   ],
 
   /*
